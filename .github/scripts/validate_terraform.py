@@ -26,7 +26,7 @@ for directory in directories:
             if not re.search(r'^mock_provider\s+"azurerm"', text, re.MULTILINE):
                 raise SystemExit(f"Azure tests must mock the provider: {test_file}")
     for arguments in (
-        ["init", "-backend=false", "-input=false"],
+        ["init", "-backend=false", "-input=false", "-lockfile=readonly"],
         ["validate", "-no-color"],
         ["test", "-no-color"],
     ):

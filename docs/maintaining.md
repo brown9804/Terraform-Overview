@@ -34,7 +34,8 @@ python .github/scripts/check_site.py
 
 Install `requirements.txt` in an isolated Python environment first.
 The validator installs provider plugins and runs every module/example's
-validation and explicit plan-only tests. It never authenticates to Azure.
+validation and explicit plan-only tests. Initialization enforces committed
+provider selections with a read-only lock file. It never authenticates to Azure.
 For intentional upgrades, regenerate genuine provider locks with Terraform;
 never write package hashes by hand.
 

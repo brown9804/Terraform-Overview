@@ -36,11 +36,11 @@ resource "azurerm_storage_account" "this" {
   account_replication_type        = "LRS"
   account_kind                    = "StorageV2"
   min_tls_version                 = "TLS1_2"
-  https_traffic_only_enabled       = true
-  allow_nested_items_to_be_public  = false
+  https_traffic_only_enabled      = true
+  allow_nested_items_to_be_public = false
   shared_access_key_enabled       = false
-  public_network_access_enabled   = false
-  default_to_oauth_authentication  = true
+  public_network_access           = "Disabled"
+  default_to_oauth_authentication = true
 }
 
 output "id" {
