@@ -1,0 +1,78 @@
+name: Validate Terraform and deploy documentation
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  TF_IN_AUTOMATION: 'true'
+  TF_INPUT: 'false'
+  TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform-plugin-cache
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.17.2
+          terraform_wrapper: false
+      - name: Install documentation dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Prepare provider cache
+        run: mkdir -p "$TF_PLUGIN_CACHE_DIR"
+      - name: Format Terraform sources
+        run: terraform fmt -recursive
+      - name: Validate configurations and run plan-only tests
+        run: python .github/scripts/validate_terraform.py
+      - name: Verify source formatting is committed
+        run: git diff --exit-code -- '*.tf' '*.tftest.hcl'
+      - name: Check documentation synchronization and table rendering
+        run: |
+          python .github/scripts/generate_examples.py --check
+          python -m unittest discover -s .github/scripts -p 'test_*.py'
+      - name: Build strict documentation and check local links
+        run: |
+          python -m mkdocs build --strict
+          python .github/scripts/check_site.py
+      - name: Upload provider locks and formatting suggestions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-source-and-locks
+          include-hidden-files: true
+          path: |
+            examples/**/*.tf
+            examples/**/*.tftest.hcl
+            examples/**/.terraform.lock.hcl
+            modules/**/*.tf
+            modules/**/*.tftest.hcl
+            modules/**/.terraform.lock.hcl
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: pages

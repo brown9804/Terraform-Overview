@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this learning resource, please cite this repository."
+title: "Terraform for Everyone: Terraform Overview"
+type: software
+authors:
+  - name: "Terraform Overview contributors"
+repository-code: "https://github.com/brown9804/Terraform-Overview"
+url: "https://brown9804.github.io/Terraform-Overview/"
+license: GPL-3.0-only
+abstract: "A practical Terraform learning platform with original examples, Azure modules, documentation, and safe validation workflows."

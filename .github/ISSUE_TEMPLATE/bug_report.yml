@@ -1,0 +1,22 @@
+name: Bug report
+description: Report a reproducible code or documentation problem.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the affected example/page and expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction and versions
+      description: Include Terraform/provider versions and whether this was a mock or live run. Remove secrets, state, identifiers, and personal data.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized output or screenshot
+      description: Do not attach state, saved plans, credentials, or environment dumps.

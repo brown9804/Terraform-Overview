@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  {% if page.url == nav.homepage.url %}
+    <span aria-current="page">Home</span>
+  {% else %}
+    <a href="{{ nav.homepage.url | url }}">Home</a>
+    {% for ancestor in page.ancestors | reverse %}
+      {% if ancestor.title != "Home" %}
+        <span aria-hidden="true"> / </span>
+        <span>{{ ancestor.title }}</span>
+      {% endif %}
+    {% endfor %}
+    <span aria-hidden="true"> / </span>
+    <span aria-current="page">{{ page.title }}</span>
+  {% endif %}
+</nav>
+{{ super() }}
+{% endblock %}

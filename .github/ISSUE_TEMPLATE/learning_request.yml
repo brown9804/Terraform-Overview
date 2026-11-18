@@ -1,0 +1,15 @@
+name: Learning improvement
+description: Propose a focused lesson, correction, or accessibility improvement.
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Learning goal
+      description: Describe the learner, current difficulty, and practical outcome.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested change
+      description: Note relevant existing content and avoid duplicating the companion service templates.

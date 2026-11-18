@@ -1,0 +1,94 @@
+site_name: Terraform Overview
+site_description: Learn Terraform concepts, safe workflows, reusable modules, and Azure infrastructure patterns.
+site_url: https://brown9804.github.io/Terraform-Overview/
+repo_url: https://github.com/brown9804/Terraform-Overview
+repo_name: brown9804/Terraform-Overview
+edit_uri: edit/main/docs/
+use_directory_urls: false
+strict: true
+exclude_docs: |
+  /overrides/
+theme:
+  name: material
+  custom_dir: docs/overrides
+  font: false
+  logo: assets/cloud2br-logo.png
+  favicon: assets/cloud2br-logo.png
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark theme
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light theme
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - content.code.copy
+    - content.action.edit
+    - search.suggest
+    - search.highlight
+plugins:
+  - search
+extra:
+  generator: false
+extra_css:
+  - styles.css
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+validation:
+  nav:
+    omitted_files: ignore
+  links:
+    not_found: warn
+    anchors: warn
+nav:
+  - Home:
+      - Welcome: index.md
+      - Learning paths: learning-paths.md
+      - Getting started: getting-started.md
+  - Learn:
+      - Terraform and IaC: fundamentals.md
+      - Language and expressions: language.md
+      - Providers and dependencies: providers.md
+      - State and backends: state-backends.md
+      - Modules: modules.md
+      - Plan and apply: workflow.md
+      - Testing and CI: testing.md
+  - Build:
+      - Example catalog: catalog.md
+      - Azure foundation: azure-project.md
+      - Azure template library: azure-templates.md
+  - Reference:
+      - Security and costs: security-costs.md
+      - Cheat sheet: cheat-sheet.md
+      - Troubleshooting: troubleshooting.md
+      - Official resources: resources.md
+  - Community:
+      - Contributing: contributing.md
+      - Code of conduct: code-of-conduct.md
+      - Maintenance: maintaining.md
